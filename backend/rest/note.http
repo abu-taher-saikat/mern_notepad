@@ -11,6 +11,8 @@ Content-Type: application/json
 ### get all notes 
 GET http://localhost:5000/api/v1/note
 
+### advanced get 
+GET http://localhost:5000/api/v1/note?slug=change-the-world-by-being-yourself
 ### get a single note by id 
 GET http://localhost:5000/api/v1/note/603a779f2f27f7167456a4b9
 Content-Type: application/json

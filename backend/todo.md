@@ -2,7 +2,7 @@
 
 Things to add on note. # Title # Date # User id # Tags # Category
 
-[#] create notepad crud.
+[+] create notepad crud.
 => get all notes
 => get a note by id
 => post a note
