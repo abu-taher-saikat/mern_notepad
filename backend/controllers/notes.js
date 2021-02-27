@@ -24,22 +24,7 @@ exports.createNote = asyncHandler(async(req, res, next) => {
 // @route  GET /api/v1/note/
 // @access Privet
 exports.getAllNote = asyncHandler(async(req, res, next) => {
-    let query ;
-    let queryStr = JSON.stringify(req.query);
-    queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
-
-    query = Note.find(JSON.parse(queryStr));
-
-    const note = await query;
-    
-    if(!note){
-        return next(new ErrorResponse(`can't find notes`, 400 ));
-    }
-    res.status(201).json({
-        success : true,
-        count : note.length,
-        data : note
-    })
+    res.status(200).json(res.advancedResults);
 });
 
 // @desc   update a note with id.

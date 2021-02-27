@@ -2,10 +2,14 @@ const express = require('express');
 
 const { createNote ,getAllNote, getNoteByID, updateNote , deleteNote} = require('../controllers/notes');
 
+const Note = require('../models/Note');
+const advancedResults = require('../middleware/advancedResults');
+
+
 const router = express.Router();
 
 
-router.route('/').post(createNote).get(getAllNote);
+router.route('/').post(createNote).get(advancedResults(Note), getAllNote);
 router.route('/:id').get(getNoteByID).put(updateNote).delete(deleteNote);
 
 module.exports = router;
