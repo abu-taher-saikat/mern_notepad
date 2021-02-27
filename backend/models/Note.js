@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const slugify = require('slugify');
 
-NoteSchema = mongoose.Schema({
+const NoteSchema = mongoose.Schema({
     title : {
         type : String,
         required : [true, 'Please add a title'],
@@ -17,8 +18,18 @@ NoteSchema = mongoose.Schema({
     tags : {
         type : [String],
         required : true
+    },
+    slug : {
+        type : String,
     }
 })
+
+// create sluf from the title.
+NoteSchema.pre('save', function(next){
+    this.slug = slugify(this.title, {lower : true});
+    next();
+})
+
 
 
 module.exports = mongoose.model('Note', NoteSchema);
