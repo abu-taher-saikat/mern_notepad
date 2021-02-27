@@ -1,0 +1,11 @@
+### create a note
+POST http://localhost:5000/api/v1/note/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "title" : "this is my first title",
+    "notebody" : "the body of the note is someting that worki fine",
+    "tags" : ["saikat","is","creating his", "first post here"]
+}
+
+### get all course
