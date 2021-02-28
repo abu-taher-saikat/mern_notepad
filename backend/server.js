@@ -13,6 +13,8 @@ connectDb();
 
 // bring all the router
 const note = require('./router/notes');
+const auth = require('./router/auth');
+
 
 const app = express();
 
@@ -22,7 +24,8 @@ app.use(morgan('dev'));
 
 
 // Mounting the routers
-app.use('/api/v1/note', note)
+app.use('/api/v1/note', note);
+app.use('/api/v1/auth', auth);
 
 
 
