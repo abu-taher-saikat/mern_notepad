@@ -48,12 +48,27 @@ exports.login = asyncHandler(async(req, res, next) => {
       return next(new ErrorResponse('Invalid credentials', 401));
     }
 
+    
     // Create token
     // const token = user.getSignedJwtToken();
     // res.status(200).json({success : true, token , data : user});
     sendTokenResponse(user, 200, res);
 
 })
+
+
+// @desc      Get current logged in user
+// @route     GET /api/v1/auth/me
+// @access    Private
+exports.getMe = asyncHandler(async (req, res, next) => {
+    // user is already available in req due to the protect middleware
+    const user = req.user;
+  
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+});
 
 
 

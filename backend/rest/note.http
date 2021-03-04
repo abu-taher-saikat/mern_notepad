@@ -3,9 +3,9 @@ POST http://localhost:5000/api/v1/note/ HTTP/1.1
 Content-Type: application/json
 
 {
-    "title" : "wtf is going on here. what the fuck.",
-    "notebody" : "more saiya na lagu tera baiya. lage jiya ko thesh.",
-    "tags" : ["what", "the", "fuck", "is going", "on"]
+    "title" : "note nubmer 4d.",
+    "notebody" : "I lidaske this note pad wah",
+    "tags" : ["note pad", "by", "saikat"]
 }
 
 ### get all notes 

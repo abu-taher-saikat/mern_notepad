@@ -15,6 +15,7 @@ connectDb();
 // bring all the router
 const note = require('./router/notes');
 const auth = require('./router/auth');
+const admin = require('./router/admin');
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(cookieParser());
 // Mounting the routers
 app.use('/api/v1/note', note);
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/admin', admin);
 
 
 

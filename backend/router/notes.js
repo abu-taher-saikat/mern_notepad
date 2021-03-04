@@ -7,6 +7,7 @@ const advancedResults = require('../middleware/advancedResults');
 
 
 const router = express.Router();
+const {protect} = require('../middleware/auth');
 
 
 router.route('/').post(createNote).get(advancedResults(Note), getAllNote);
