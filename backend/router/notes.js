@@ -10,7 +10,7 @@ const router = express.Router();
 const {protect} = require('../middleware/auth');
 
 
-router.route('/').post(createNote).get(advancedResults(Note), getAllNote);
+router.route('/').post(protect, createNote).get(advancedResults(Note), getAllNote);
 router.route('/:id').get(getNoteByID).put(updateNote).delete(deleteNote);
 
 module.exports = router;
