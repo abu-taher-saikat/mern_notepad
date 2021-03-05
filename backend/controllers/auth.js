@@ -37,6 +37,7 @@ exports.login = asyncHandler(async(req, res, next) => {
 
     // Check for user
     const user = await User.findOne({ email }).select('+password');
+    
     if(!user){
       return next(new ErrorResponse('Invalid credentials', 401));
     }
@@ -62,7 +63,8 @@ exports.login = asyncHandler(async(req, res, next) => {
 // @access    Private
 exports.getMe = asyncHandler(async (req, res, next) => {
     // user is already available in req due to the protect middleware
-    const user = await User.findById(req.user.id);
+    const user = req.user;
+    console.log(user);
   
     res.status(200).json({
       success: true,

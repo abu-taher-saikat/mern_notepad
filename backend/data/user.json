@@ -40,5 +40,11 @@
     "email": "mahiya@gmail.com",
     "role": "user",
     "password": "123456"
+  },
+  {
+    "name": "Abu Taher Saikat",
+    "email": "mdabutahersaikat@gmail.com",
+    "role": "user",
+    "password": "123456"
   }
 ]

@@ -7,6 +7,9 @@ const asyncHandler = require('../middleware/async');
 // @route  POST /api/v1/note
 // @access Privet
 exports.createNote = asyncHandler(async(req, res, next) => {
+    // Add user to req,body
+    req.body.user = req.user.id;
+
     const note = await Note.create(req.body);
 
     if(!note){
@@ -31,16 +34,27 @@ exports.getAllNote = asyncHandler(async(req, res, next) => {
 // @route  PUT /api/v1/note/:id
 // @access Privet
 exports.updateNote = asyncHandler(async(req, res, next) => {
-    const note = await Note.findByIdAndUpdate(req.params.id, req.body, {
-        new : true,
-        runValidators : true
-    });
+    let note = await Note.findById(req.params.id);
 
     if(!note){
         return next(new ErrorResponse(`can't find notes with this id ${req.params.id}`, 400 ));
     }
 
-    res.status(201).json({
+    // Make sure USER is note owner
+    if(note.user.toString() !== req.user.id){
+        return  next(new ErrorResponse(`User ${req.params.id} is not authorized to update this note`, 401));
+    }
+
+    // find by id an update.
+    note = await Note.findByIdAndUpdate(req.params.id, req.body, {
+        new : true,
+        runValidators : true
+    });
+
+    console.log(req.body.red);
+    console.log(req.params.id.green);
+
+    res.status(200).json({
         success : true,
         data : note
     })
@@ -56,6 +70,11 @@ exports.deleteNote = asyncHandler(async(req, res, next) => {
 
     if(!note){
         return next(new ErrorResponse(`can't find notes with this id ${req.params.id}`, 400 ));
+    }
+
+    // Make sure USER is note owner
+    if(note.user.toString() !== req.user.id){
+        return  next(new ErrorResponse(`User ${req.params.id} is not authorized to Delete this note`, 401));
     }
 
     note.remove();

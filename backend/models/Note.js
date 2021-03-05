@@ -21,6 +21,10 @@ const NoteSchema = mongoose.Schema({
     },
     slug : {
         type : String,
+    },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
     }
 })
 
