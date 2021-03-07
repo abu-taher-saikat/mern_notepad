@@ -72,6 +72,26 @@ exports.getMe = asyncHandler(async (req, res, next) => {
     });
 });
 
+// @desc   Forgot password
+// @route  POST /api/v1/auth/forgotpassword
+// @access Private
+exports.forgotpassword = asyncHandler(async(req, res, next) => {
+
+  let user = await User.findOne({ email : req.body.email});
+  console.log(user);
+  console.log(req.body);
+  
+  if(!user){
+    return next(new ErrorResponse('There is no user with that email', 401));
+  }
+  // Get reset token 
+  const resetToken = user.getResetPasswordToken();
+
+  await user.save({validateBeforeSave : false});
+
+  res.status(200).json({ success : true, data : user})
+})
+
 
 
 //JWT_COOKIE_EXPIRE = 30

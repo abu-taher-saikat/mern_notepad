@@ -30,6 +30,26 @@ exports.getAllNote = asyncHandler(async(req, res, next) => {
     res.status(200).json(res.advancedResults);
 });
 
+// @desc   get all Notes by user.
+// @route  GET /api/v1/note/:userid/allnote
+// @access Privet
+exports.getAllNotebyUserId = asyncHandler(async(req, res, next) => {
+    // res.status(200).json(res.advancedResults);
+    const notes = await Note.find({ 
+        user : req.params.userid
+    })
+
+    if(!notes){
+        return next(new ErrorResponse(`can't finy any notes with this user`,400));
+    }
+
+    res.status(200).json({
+        success : true,
+        notes
+    })
+});
+
+
 // @desc   update a note with id.
 // @route  PUT /api/v1/note/:id
 // @access Privet
@@ -51,8 +71,8 @@ exports.updateNote = asyncHandler(async(req, res, next) => {
         runValidators : true
     });
 
-    console.log(req.body.red);
-    console.log(req.params.id.green);
+    // console.log(req.body.red);
+    // console.log(req.params.id.green);
 
     res.status(200).json({
         success : true,
