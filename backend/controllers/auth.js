@@ -146,6 +146,29 @@ exports.resetPassword = asyncHandler(async(req, res, next) => {
 })
 
 
+// @desc   Update user details
+// @route  POST /api/v1/auth/updatedetails
+
+// @access Private
+exports.updateDetails = asyncHandler(async (req, res, next) => {
+  req.body.user = req.user.id;
+
+  const fieldsToUpdate = {
+    name : req.body.name,
+    email : req.body.email
+  }
+  console.log(req.user);
+  const user = await User.findByIdAndUpdate(req.user.id, fieldsToUpdate,{
+    new : true,
+    runValidators : true
+  })
+
+  res.status(200).json({success : true, data : user})
+})
+
+
+
+
 
 //JWT_COOKIE_EXPIRE = 30
 // Get token from model, create cookie and send response
