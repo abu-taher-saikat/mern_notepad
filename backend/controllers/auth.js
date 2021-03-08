@@ -3,7 +3,6 @@ const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/ErrorResponse');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
-const { log } = require('console');
 
 
 // @desc   Register a user
@@ -145,13 +144,29 @@ exports.resetPassword = asyncHandler(async(req, res, next) => {
   sendTokenResponse(user, 200, res);
 })
 
+// @desc   Update  password
+// @route  POST /api/v1/auth/updatedepassword
+// @access Private
+exports.updatePassword = asyncHandler(async (req, res, next) => {
+  console.log(req.body);
+  const user = await User.findById(req.user.id).select('+password');
+
+  // Check current passwords
+  if(!(await user.matchPassword(req.body.currentPassword))){
+    return next(new ErrorResponse('Password in correct', 401));
+  }
+
+  user.password = req.body.newPassword;
+  await user.save();
+
+  sendTokenResponse(user, 200, res);
+})
+
 
 // @desc   Update user details
 // @route  POST /api/v1/auth/updatedetails
-
 // @access Private
 exports.updateDetails = asyncHandler(async (req, res, next) => {
-  req.body.user = req.user.id;
 
   const fieldsToUpdate = {
     name : req.body.name,
